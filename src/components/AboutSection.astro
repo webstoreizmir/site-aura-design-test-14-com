@@ -1,0 +1,62 @@
+---
+interface Stat {
+  label: string;
+  value: string;
+}
+
+interface Props {
+  title: string;
+  description: string;
+  stats: Stat[];
+  imageKeyword: string;
+}
+
+const { title, description, stats, imageKeyword } = Astro.props;
+const seed = Math.floor(Math.random() * 10000);
+const imgUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(imageKeyword + ' professional photo interior')}?width=800&height=1000&nologo=true&seed=${seed}&model=flux`;
+---
+
+<section id="about" class="py-24 relative overflow-hidden bg-white">
+  <div class="container mx-auto px-6">
+    <div class="flex flex-col md:flex-row items-center gap-16">
+      
+      <!-- Image Side -->
+      <div class="w-full md:w-1/2 relative group">
+        <div class="absolute -top-4 -left-4 w-24 h-24 bg-[rgb(var(--color-primary))] opacity-20 rounded-full blur-2xl group-hover:opacity-40 transition-opacity"></div>
+        <div class="absolute -bottom-4 -right-4 w-32 h-32 bg-[rgb(var(--color-secondary))] opacity-20 rounded-full blur-2xl group-hover:opacity-40 transition-opacity"></div>
+        
+        <img 
+          src={imgUrl} 
+          alt="About Us" 
+          class="relative rounded-3xl shadow-2xl w-full object-cover h-[600px] hover:scale-[1.01] transition-transform duration-700"
+        />
+        
+        <!-- Experience Badge -->
+        <div class="absolute bottom-10 -right-6 bg-white p-8 rounded-2xl shadow-xl border-l-8 border-[rgb(var(--color-primary))] hidden md:block animate-bounce-slow">
+          <p class="text-5xl font-bold text-[rgb(var(--color-primary))]">10+</p>
+          <p class="text-sm font-bold text-slate-600 uppercase tracking-wider mt-1">Yıllık Tecrübe</p>
+        </div>
+      </div>
+
+      <!-- Content Side -->
+      <div class="w-full md:w-1/2">
+        <span class="text-[rgb(var(--color-primary))] font-bold tracking-wider uppercase text-sm mb-2 block">Hakkımızda</span>
+        <h2 class="text-4xl md:text-5xl font-heading font-bold mb-8 text-slate-900 leading-tight">
+          {title}
+        </h2>
+        <p class="text-lg text-slate-600 leading-relaxed font-body mb-10">
+          {description}
+        </p>
+
+        <div class="grid grid-cols-2 gap-6 mb-10">
+          {stats.map(stat => (
+            <div class="p-6 rounded-2xl bg-slate-50 border border-slate-100 hover:border-[rgb(var(--color-primary))] transition-colors">
+              <p class="text-3xl font-bold text-[rgb(var(--color-primary))] mb-2">{stat.value}</p>
+              <p class="text-sm font-medium text-slate-500">{stat.label}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
